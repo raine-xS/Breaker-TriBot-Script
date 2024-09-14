@@ -43,26 +43,7 @@ public abstract class GUI extends Application {
         this.stage = stage;
         this.stage.setTitle(this.title);
         this.scene = new Scene(createContent(), 300, 200);
-        try {
-            Log.debug("Setting Styles");
-            // scripts/frontend/mainUI/MainUIStyles.css
-            byte[] resourceContents = getClass().getClassLoader().getResourceAsStream("scripts/frontend/mainUI/MainUIStyles.css").readAllBytes();
-            String cssResource = new String(resourceContents);
-            Log.debug("Stylesheet:\n " + cssResource);
-
-            //Create a temporary file in the default temporary-file directory of the operating system
-            File tempCssFile = File.createTempFile("temp", ".css");
-
-            // Write the CSS content to the file
-            try (FileWriter fileWriter = new FileWriter(tempCssFile)) {
-                fileWriter.write(cssResource);
-            }
-
-            // Add the file's URL to the scene's stylesheets
-            this.scene.getStylesheets().add(tempCssFile.toURI().toURL().toExternalForm());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //this.setSceneStyles("scripts/frontend/mainUI/MainUIStyles.css");
         this.stage.setScene(this.scene);
 
         this.setOnCloseListeners();
@@ -103,6 +84,28 @@ public abstract class GUI extends Application {
 //            e.printStackTrace();
 //        }
 //    }
+    public void setSceneStyles(String stylesheetResourcePath) {
+        try {
+            Log.debug("Setting Styles");
+            // scripts/frontend/mainUI/MainUIStyles.css
+            byte[] resourceContents = getClass().getClassLoader().getResourceAsStream(stylesheetResourcePath).readAllBytes();
+            String cssResource = new String(resourceContents);
+            Log.debug("Stylesheet:\n " + cssResource);
+
+            //Create a temporary file in the default temporary-file directory of the operating system
+            File tempCssFile = File.createTempFile("temp", ".css");
+
+            // Write the CSS content to the file
+            try (FileWriter fileWriter = new FileWriter(tempCssFile)) {
+                fileWriter.write(cssResource);
+            }
+
+            // Add the file's URL to the scene's stylesheets
+            this.scene.getStylesheets().add(tempCssFile.toURI().toURL().toExternalForm());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public void setTitle(String title){
         this.title = title;
