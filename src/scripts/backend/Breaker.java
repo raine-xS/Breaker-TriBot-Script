@@ -1,7 +1,6 @@
 package scripts.backend;
 
-import javafx.stage.Stage;
-import org.tribot.script.sdk.Log;
+import com.sun.tools.javac.Main;
 import org.tribot.script.sdk.Waiting;
 import org.tribot.script.sdk.script.TribotScript;
 import org.tribot.script.sdk.script.TribotScriptManifest;
@@ -18,10 +17,10 @@ public class Breaker implements TribotScript {
 
 	@Override
 	public void execute(final String args) {
-		///scripts/frontend/mainUI/MainUIStyles.css
-		GUI mainUI = new MainUI();
+		// mainUI.setSceneStyles("scripts/frontend/mainUI/MainUIStyles.css");
+		GUI mainUI = MainUI.newMainUIWithTitleStylesheetIcon("Breaker", "scripts/resources/MainUIStyles.css", "scripts/resources/icon.png");
 		mainUI.show();
-		mainUI.setTitle("ferwgfws");
+
 
 		while (mainUI.isOpen()) {
 			Waiting.wait(1000);
