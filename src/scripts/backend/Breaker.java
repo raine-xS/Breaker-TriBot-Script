@@ -1,11 +1,10 @@
 package scripts.backend;
 
-import com.sun.tools.javac.Main;
 import org.tribot.script.sdk.Waiting;
 import org.tribot.script.sdk.script.TribotScript;
 import org.tribot.script.sdk.script.TribotScriptManifest;
-import scripts.frontend.GUI;
 import scripts.frontend.mainUI.MainUI;
+import scripts.frontend.mainUI.MainUIController;
 
 @TribotScriptManifest(
 		name = "Breaker",
@@ -18,7 +17,8 @@ public class Breaker implements TribotScript {
 	@Override
 	public void execute(final String args) {
 		// mainUI.setSceneStyles("scripts/frontend/mainUI/MainUIStyles.css");
-		GUI mainUI = MainUI.newMainUIWithTitleStylesheetIcon("Breaker", "scripts/resources/MainUIStyles.css", "scripts/resources/icon.png");
+		MainUI mainUI = MainUI.newMainUIWithTitleStylesheetIcon("Breaker", "scripts/resources/MainUIStyles.css", "scripts/resources/icon.png");
+		MainUIController mainUIController = new MainUIController(mainUI);
 		mainUI.show();
 
 

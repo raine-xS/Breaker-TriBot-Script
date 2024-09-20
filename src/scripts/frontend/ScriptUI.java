@@ -11,16 +11,17 @@ import org.tribot.script.sdk.Log;
 import org.tribot.script.sdk.ScriptListening;
 import org.tribot.script.sdk.Waiting;
 
+
 import javax.swing.SwingUtilities;
 import java.io.*;
 
-public abstract class GUI extends Application {
+public abstract class ScriptUI extends Application {
     private boolean isOpen = false;
     private Scene scene;
     private Stage stage;
 
     /************************************************************************************************************************
-    * A GUI constructor that initializes the JavaFX runtime on the Event Dispatch Thread (EDT) using JFXPanel.              *
+    * A UI constructor that initializes the JavaFX runtime on the Event Dispatch Thread (EDT) using JFXPanel.               *
     *                                                                                                                       *
     * JFXPanel is a Swing component that allows embedding JavaFX content into a Swing application. Normally,                *
     * JavaFX applications are initialized via Application.launch(). However, since TriBot scripts are executed              *
@@ -28,7 +29,7 @@ public abstract class GUI extends Application {
     * using JFXPanel() ensures that the JavaFX runtime is initialized without the limitations of Application.launch().      *
     *                                                                                                                       *
     ************************************************************************************************************************/
-    public GUI() {
+    public ScriptUI() {
         SwingUtilities.invokeLater(() -> {
             // Initializes the JavaFX runtime on EDT with JFXPanel() for restartability.
             new JFXPanel();
@@ -43,13 +44,13 @@ public abstract class GUI extends Application {
     }
 
     /************************************************************************************************************************
-    * Constructs a GUI with a specified title, stylesheet, and icon. See GUI() for details.                                 *
+    * Constructs a UI with a specified title, stylesheet, and icon. See GUI() for details.                                  *
     * Null values skips over the option.                                                                                    *
     *                                                                                                                       *
     * @param title                  the title of the JavaFX stage.                                                          *
     * @param stylesheetResourcePath the path to the stylesheet resource for styling the JavaFX scene.                       *
     *************************************************************************************************************************/
-    public GUI(String title, String stylesheetResourcePath, String iconResourcePath) {
+    public ScriptUI(String title, String stylesheetResourcePath, String iconResourcePath) {
         SwingUtilities.invokeLater(() -> {
             // Initializes the JavaFX runtime on EDT with JFXPanel() for restartability.
             new JFXPanel();
@@ -64,7 +65,7 @@ public abstract class GUI extends Application {
         waitForStageInit(5000);
     }
 
-    protected abstract Parent createContent(); // Abstract method that must be implemented by subclasses to provide the content for the GUI scene.
+    protected abstract Parent createFXContent(); // Abstract method that must be implemented by subclasses to provide the content for the application scene. Runs on the JavaFX Application Thread.
 
     /************************************************************************************************************************
     * Initializes and sets up the JavaFX stage with a default scene.                                                        *
@@ -76,7 +77,7 @@ public abstract class GUI extends Application {
         Platform.setImplicitExit(false); // Prevents JavaFX from exiting when the last window is closed
 
         this.stage = stage;
-        this.scene = new Scene(createContent(), 300, 200);
+        this.scene = new Scene(createFXContent(), 500, 300);
 
         this.stage.setScene(this.scene);
 
@@ -120,15 +121,20 @@ public abstract class GUI extends Application {
         return isOpen;
     }
 
+    public Scene getScene() {
+        return this.scene;
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    // Sets whether the window is always on top.
+    public void setAlwaysOnTop(Boolean bool) {
+        this.stage.setAlwaysOnTop(bool);
+    }
+
     // Sets the icon of the application window from the provided resource path.
-    //    public void setIcon(String iconResourcePath){
-    //        try {
-    //            Log.log("[setIcon] Setting icon.");
-    //            this.stage.getIcons().add(new Image(getClass().getResourceAsStream(iconResourcePath)));
-    //        } catch (Exception e) {
-    //            Log.debug(e.toString());
-    //        }
-    //    }
     public void setIcon(String iconResourcePath) {
         // Do nothing if resource path is null
         if (iconResourcePath == null) {
@@ -136,15 +142,16 @@ public abstract class GUI extends Application {
         }
         try {
             Log.log("[setIcon] Setting icon.");
+            // Get the icon as an input stream
             InputStream iconInputStream = getClass().getClassLoader().getResourceAsStream(iconResourcePath);
 
-            // //Create a temporary file in the default temporary-file directory of the operating system
+            // Create a temporary file in the default temporary-file directory of the operating system
             File tempIconFile = File.createTempFile("temp_icon", ".png");
             tempIconFile.deleteOnExit(); // Ensure the file is deleted when the JVM exits
 
             // Write the icon data to the temporary file
-            try (FileOutputStream tempOutputStream = new FileOutputStream(tempIconFile)) { // Create a file output stream to write to the temp file
-                iconInputStream.transferTo(tempOutputStream); // Writes the input stream to the output stream
+            try (FileOutputStream tempFileOutputStream = new FileOutputStream(tempIconFile)) { // Create a file output stream to write to the temp file
+                iconInputStream.transferTo(tempFileOutputStream); // Writes the input stream to the output stream file
             }
 
             // Load the icon from the temporary file

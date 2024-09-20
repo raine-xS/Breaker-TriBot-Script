@@ -18,12 +18,110 @@
     -fx-border-color: transparent transparent white transparent;
 }
 
+.text-field {
+    -fx-text-fill: #afafaf;
+}
 
 .tab {
     -fx-background-color: #2b2d2e;
     -fx-border-color: white;
 }
 
+.tab-pane .label, .tab-pane .text {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+}
+
+HBox {
+    -fx-spacing: 10px; /* Adds 10 pixels of spacing between HBox children */
+    -fx-padding: 5px; /* Adds padding around the HBox content */
+    -fx-alignment: center; /* Aligns content to the left and centers vertically */
+}
+
+
+
 .tab-label {
     -fx-text-fill: white;
+}
+
+.choice-box .label {
+    -fx-text-fill: black;
+}
+
+#start-button {
+    -fx-background-color: #808080; /* Green background */
+    -fx-text-fill: white;
+    -fx-font-size: 28px;
+    -fx-padding: 2px 2px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-min-height: 50px;
+    -fx-min-width: 100%;
+    -fx-max-width: Infinity;
+    -fx-cursor: hand;
+}
+
+#start-button:hover {
+    -fx-background-color: #6b6b6b; /* Darker green when hovered */
+}
+
+#start-button:pressed {
+    -fx-background-color: #4f4f4f; /* Even darker when pressed */
+}
+
+#start-hbox {
+    -fx-min-width: 100%;
+    -fx-max-width: Infinity;
+    -fx-alignment: center;
+}
+
+#profile-tab-vbox {
+    -fx-alignment: center;
+}
+
+#save-load-vbox {
+    -fx-spacing: 30px;
+    -fx-padding: 5px;
+}
+
+#load-profile-button {
+    -fx-background-color: #808080; /* Green background */
+    -fx-text-fill: white;
+    -fx-font-size: 28px;
+    -fx-padding: 2px 2px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-min-height: 50px;
+    -fx-min-width: 200px;
+    -fx-max-width: Infinity;
+    -fx-cursor: hand;
+}
+
+#load-profile-button:hover {
+    -fx-background-color: #6b6b6b; /* Darker green when hovered */
+}
+
+#load-profile-button:pressed {
+    -fx-background-color: #4f4f4f; /* Even darker when pressed */
+}
+
+#save-profile-button {
+    -fx-background-color: #808080; /* Green background */
+    -fx-text-fill: white;
+    -fx-font-size: 28px;
+    -fx-padding: 2px 2px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-min-height: 50px;
+    -fx-min-width: 200px;
+    -fx-max-width: Infinity;
+    -fx-cursor: hand;
+}
+
+#save-profile-button:hover {
+    -fx-background-color: #6b6b6b; /* Darker green when hovered */
+}
+
+#save-profile-button:pressed {
+    -fx-background-color: #4f4f4f; /* Even darker when pressed */
 }
